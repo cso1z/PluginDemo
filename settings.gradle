@@ -1,0 +1,23 @@
+rootProject.name = "My Application"
+include ':app'
+include ':lib'
+
+
+gradle.addBuildListener(new BuildListener() {
+    void buildStarted(Gradle var1) {
+        println '【start】'
+    }
+    void settingsEvaluated(Settings var1) {
+        // 注意：在这里不能访问 var1.gradle.rootProject，因为 Project 还没有初始化
+        println '【settings.gradle 解析完成】'
+    }
+    void projectsLoaded(Gradle var1) {
+        println '【init finish】'
+    }
+    void projectsEvaluated(Gradle var1) {
+        println '【配置阶段结束】'
+    }
+    void buildFinished(BuildResult var1) {
+        println '【构建过程结束】 '
+    }
+})

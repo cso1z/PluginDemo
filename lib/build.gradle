@@ -1,0 +1,31 @@
+plugins {
+    id 'groovy' // Groovy 语言插件
+    id 'maven' // 用于发布插件
+    id 'java-gradle-plugin' // 用于注册 gradlePlugin
+}
+
+apply from: "../maven.gradle"
+
+dependencies {
+    // Groovy DSL
+    implementation localGroovy()
+    // Gradle DSL
+    implementation gradleApi()
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_7
+    targetCompatibility = JavaVersion.VERSION_1_7
+}
+
+// 注册插件，也可以使用 properties 文件
+gradlePlugin {
+    plugins {
+        modularPlugin {
+            // 插件id
+            id = 'com.xyz.lib.demo'
+            // 插件实现类
+            implementationClass = 'com.xyz.lib.MyTest'
+        }
+    }
+}
