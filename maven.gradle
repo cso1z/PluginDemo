@@ -1,3 +1,11 @@
+import org.w3c.dom.Document
+import org.w3c.dom.Element
+import org.w3c.dom.Node
+
+import javax.xml.parsers.DocumentBuilder
+import javax.xml.parsers.DocumentBuilderFactory
+import org.w3c.dom.NodeList
+
 /**
  * 参考资料：https://juejin.cn/post/6963633839860088846
  */
@@ -29,6 +37,29 @@ project.ext {
                     }
 
                     project.getTasks().findByName("uploadArchives").doFirst {
+                        if (isSnapshot) {
+                            String mavenConfig = String.format("%s%s/%s/maven-metadata.xml", MAVEN_RELEASE_URL, groupId.replace(".", "/"), artifactId)
+                            println("Uri:" + mavenConfig)
+                            HttpURLConnection connection = (HttpURLConnection) new URL(mavenConfig).openConnection()
+                            connection.setConnectTimeout(5000);
+                            connection.setRequestMethod("GET");
+                            if (connection.getResponseCode() == 200) {
+                                InputStream xml = connection.getInputStream()
+                                DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+                                DocumentBuilder docBuilder = dbf.newDocumentBuilder()
+                                Document doc = docBuilder.parse(xml, "UTF-8")
+                                NodeList nodes = doc.getElementsByTagName("version")
+                                for (Node item : nodes) {
+                                    if (item instanceof Element) {
+                                        Element element = (Element) item
+                                        println("item:" + element.textContent)
+                                        if (element.textContent == version) {
+                                            throw new Exception(String.format("%s %s release version already exists,you cant re-upload %s", artifactId, version, pom.version))
+                                        }
+                                    }
+                                }
+                            }
+                        }
                         println("###################################"
                                 + "\nuploadArchives = " + pom.groupId + ":" + pom.artifactId + ":" + pom.version + "." + pom.packaging
                                 + "\nrepository =" + (isSnapshot ? MAVEN_SNAPSHOT_URL : MAVEN_RELEASE_URL)

@@ -9,15 +9,15 @@ gradle.addBuildListener(new BuildListener() {
     }
     void settingsEvaluated(Settings var1) {
         // 注意：在这里不能访问 var1.gradle.rootProject，因为 Project 还没有初始化
-        println '【settings.gradle 解析完成】'
+        println '----settingsEvaluated '
     }
     void projectsLoaded(Gradle var1) {
-        println '【init finish】'
+        println '----projectsLoaded'
     }
     void projectsEvaluated(Gradle var1) {
-        println '【配置阶段结束】'
+        println '----projectsEvaluated'
     }
     void buildFinished(BuildResult var1) {
-        println '【构建过程结束】 '
+        println '----buildFinished '
     }
 })

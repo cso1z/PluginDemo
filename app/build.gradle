@@ -1,4 +1,4 @@
-import com.xyz.lib.extension.HooksExtension
+//import com.xyz.lib.extension.HooksExtension
 
 plugins {
     id 'com.android.application'
@@ -35,5 +35,5 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-    implementation 'com.xyz.android:demo:1.0.7+'
+//    implementation 'com.xyz.android:demo:1.0.7+'
 }
