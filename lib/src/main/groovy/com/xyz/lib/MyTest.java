@@ -29,5 +29,6 @@ public class MyTest implements Plugin<Project> {
 
     private void applyExtension(Project project) {
         project.getExtensions().add(HooksExtension.KEY, HooksExtension.class);
+
     }
 }
