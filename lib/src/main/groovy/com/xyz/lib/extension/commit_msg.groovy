@@ -10,6 +10,7 @@ if (inputs.length == O || inputs.length > 3) {
     System.exit(1)
 }
 
+
 def HeadFormatMessage = "Head的格式为<type>(<scope>) : <subject> type(必需)、scope(可选)和subject(必需)" +
         "**type**用于说明commit的类别,只允许使用下面7个标识。" +
         "\n **scope**用于说明commit影响的范围，比如数据层、控制层、视图层等等，视项目不同而不同。" +
