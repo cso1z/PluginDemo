@@ -1,0 +1,33 @@
+plugins {
+    id 'java-library'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_7
+    targetCompatibility = JavaVersion.VERSION_1_7
+}
+
+//上传到maven
+apply plugin: 'maven'
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!下面AAR的文件名改成你放到libs文件夹里的文件名
+def coreAarFile = file('libs/WbCloudNormal-v5.1.4-f00e22d.aar')
+artifacts {
+    archives coreAarFile
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+//            repository(url: "http://nexus.rd.91160.com/repository/releases/"){
+//                authentication(userName: "liangy", password: "Admin123!")
+//            }
+            repository(url: "http://localhost:8081/repository/maven-releases/"){
+                authentication(userName: "admin", password: "admin123")
+            }
+            pom.version = "5.1.4.3"
+            pom.artifactId = "wbcloudnormal"
+            pom.groupId = "com.nykj.android"
+            pom.packaging = "aar"
+        }
+    }
+}
